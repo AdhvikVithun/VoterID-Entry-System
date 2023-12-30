@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from openpyxl import Workbook, load_workbook
-from tkcalendar import DateEntry  # Make sure to install this library using: pip install tkcalendar
+from tkcalendar import DateEntry
 
 class VoterRegistrationApp:
     def __init__(self, root):
@@ -29,8 +29,14 @@ class VoterRegistrationApp:
         # Election Option Menu
         self.election_combobox = self.create_label_combobox("Election:", ["MP", "MC", "MCP"], row=0, column=2, combobox_column=3, default_value="MP")
 
-        # Booth Entry
-        self.booth_entry = self.create_label_entry("Booth:", row=0, column=4, entry_column=5)
+        # MP Booth Entry
+        self.mp_booth_entry = self.create_label_entry("MP Booth:", row=0, column=4, entry_column=5)
+
+        # MC Booth Entry
+        self.mc_booth_entry = self.create_label_entry("MC Booth:", row=0, column=6, entry_column=7)
+
+        # MLA Booth Entry
+        self.mla_booth_entry = self.create_label_entry("MLA Booth:", row=0, column=8, entry_column=9)
 
         # Voter ID
         self.voter_id_entry = self.create_label_entry("Voter ID:", row=1, column=0, entry_column=1)
@@ -63,7 +69,7 @@ class VoterRegistrationApp:
         self.father_husband_name_entry = self.create_label_entry("Father/Husband Name:", row=3, column=2, entry_column=3)
 
         # Address
-        self.address_entry = self.create_label_entry("Address:", row=4, column=0, entry_column=1, column_span=7, width=200)
+        self.address_entry = self.create_label_entry("Address:", row=4, column=0, entry_column=1, column_span=9, width=200)
 
         # Family
         self.family_entry = self.create_label_entry("Family:", row=5, column=0, entry_column=1)
@@ -94,43 +100,43 @@ class VoterRegistrationApp:
         self.event_entry.grid(row=6, column=5, padx=5, pady=5)
 
         # Memo
-        self.memo_entry = self.create_label_entry("Memo:", row=6, column=6, entry_column=7, column_span=1)
+        self.memo_entry = self.create_label_entry("Memo:", row=7, column=0, entry_column=1, column_span=9, width=200)
 
         # Qualification
-        self.qualification_entry = self.create_label_entry("Qualification:", row=7, column=0, entry_column=1, column_span=7)
+        self.qualification_entry = self.create_label_entry("Qualification:", row=8, column=0, entry_column=1, column_span=1)
 
         # Stay
-        self.stay_entry = self.create_label_entry("Stay:", row=8, column=0, entry_column=1, column_span=7)
+        self.stay_entry = self.create_label_entry("Stay:", row=9, column=0, entry_column=1, column_span=1)
 
         # Voting Place
-        self.voting_place_entry = self.create_label_entry("Voting Place:", row=9, column=0, entry_column=1)
+        self.voting_place_entry = self.create_label_entry("Voting Place:", row=10, column=0, entry_column=1)
 
         # Add Party
-        self.party_entry = self.create_label_entry("Party:", row=9, column=2, entry_column=3)
+        self.party_entry = self.create_label_entry("Party:", row=10, column=2, entry_column=3)
 
         # Add Party ID
-        self.party_id_entry = self.create_label_entry("Party ID:", row=9, column=4, entry_column=5)
+        self.party_id_entry = self.create_label_entry("Party ID:", row=10, column=4, entry_column=5)
 
         # Voted
-        self.voted_entry = self.create_label_entry("Voted:", row=10, column=0, entry_column=1)
+        self.voted_entry = self.create_label_entry("Voted:", row=11, column=0, entry_column=1)
 
         # Voted Date
-        self.voted_date_entry = self.create_label_entry("Voted Date:", row=10, column=2, entry_column=3)
+        self.voted_date_entry = self.create_label_entry("Voted Date:", row=11, column=2, entry_column=3)
 
         # Add Button
         self.add_button = ttk.Button(self.root, text="Add", command=self.save_data, style="TButton")
-        self.add_button.grid(row=11, column=0, columnspan=2, pady=10)
+        self.add_button.grid(row=12, column=0, columnspan=2, pady=10)
 
         # Next Button
         self.next_button = ttk.Button(self.root, text="Next", command=self.clear_entry_fields, style="TButton")
-        self.next_button.grid(row=11, column=2, columnspan=2, pady=10)
+        self.next_button.grid(row=12, column=2, columnspan=2, pady=10)
 
         # Font Size Dropdown Menu
         self.font_size_var = tk.StringVar(self.root)
         self.font_size_var.set("Font Size")
         self.font_size_menu = tk.OptionMenu(self.root, self.font_size_var, "8", "10", "12", "14", "16", "18", "20", command=self.change_font_size)
         self.font_size_menu.config(width=10)
-        self.font_size_menu.grid(row=0, column=6, padx=5, pady=5)
+        self.font_size_menu.grid(row=12, column=4, padx=5, pady=5)
 
     def create_label_entry(self, text, row, column, entry_column, column_span=1, width=None):
         label = ttk.Label(self.root, text=text, style="TLabel")
@@ -170,7 +176,7 @@ class VoterRegistrationApp:
             sheet.title = ward_name
 
             # Write headings to Excel sheet
-            headings = ["Ward", "Election", "Booth", "Voter ID", "Serial No", "Page No", "Gender",
+            headings = ["Ward", "Election", "MP Booth", "MC Booth", "MLA Booth", "Voter ID", "Serial No", "Page No", "Gender",
                         "Age", "Birthdate", "Phone Num", "Name", "Father/Husband Name", "Address",
                         "Family", "Caste", "Area Guide", "Guide Number", "Event", "Memo", "Qualification",
                         "Stay", "Voting Place", "Party", "Party ID", "Voted", "Voted Date"]
@@ -183,7 +189,9 @@ class VoterRegistrationApp:
         data = [
             self.ward_entry.get(),
             self.election_combobox.get(),
-            self.booth_entry.get(),
+            self.mp_booth_entry.get(),
+            self.mc_booth_entry.get(),
+            self.mla_booth_entry.get(),
             self.voter_id_entry.get(),
             self.serial_no_entry.get(),
             self.page_no_entry.get(),
@@ -224,9 +232,10 @@ class VoterRegistrationApp:
 
     def clear_entry_fields(self):
         for entry in [
-            self.ward_entry, self.election_combobox, self.booth_entry, self.voter_id_entry, self.serial_no_entry,
-            self.page_no_entry, self.gender_combobox, self.age_entry, self.birthdate_entry, self.phone_num_entry,
-            self.name_entry, self.father_husband_name_entry, self.address_entry, self.family_entry,
+            self.ward_entry, self.election_combobox, self.mp_booth_entry, self.mc_booth_entry, self.mla_booth_entry,
+            self.voter_id_entry, self.serial_no_entry, self.page_no_entry, self.gender_combobox,
+            self.age_entry, self.birthdate_entry, self.phone_num_entry, self.name_entry,
+            self.father_husband_name_entry, self.address_entry, self.family_entry,
             self.caste_entry, self.area_guide_entry, self.guide_number_entry, self.memo_entry,
             self.qualification_entry, self.stay_entry, self.voting_place_entry, self.party_entry,
             self.party_id_entry, self.voted_entry, self.voted_date_entry
@@ -241,19 +250,16 @@ class VoterRegistrationApp:
         self.event_checkbox_var.set(False)
 
     def change_font_size(self, size):
-    # Change font size for all widgets
+        # Change font size for all widgets
         new_font = ("TkDefaultFont", size)
 
-    # Set default font for all widgets
+        # Set default font for all widgets
         default_font = tk.font.nametofont("TkDefaultFont")
         default_font.configure(size=size)
 
-    # If you are using custom styles, you can update their font size as well
+        # If you are using custom styles, you can update their font size as well
         for style_name in self.style.theme_names():
             self.style.configure(style_name, font=new_font)
-
-
-
 
     def run(self):
         self.root.mainloop()
